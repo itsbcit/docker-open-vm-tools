@@ -1,4 +1,4 @@
-FROM busybox
+FROM fedora:33
 
 <%= snippet('labels', binding) -%>
 
@@ -8,5 +8,15 @@ FROM busybox
 
 <%= snippet('tini', binding) -%>
 
+RUN \
+   dnf -y \
+     --setopt=tsflags=nodocs \
+     --setopt=override_install_langs=en_US.utf8 \
+     --setopt=install_weak_deps=False install file \
+     open-vm-tools \
+     net-tools \
+     iproute \
+&& dnf clean all
+
 ENTRYPOINT ["/tini", "--", "/docker-entrypoint.sh"]
-CMD [ "init-loop" ]
+CMD /usr/bin/vmtoolsd

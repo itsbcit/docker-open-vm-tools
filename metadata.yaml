@@ -1,5 +1,5 @@
 ---
-image_name: template_test
+image_name: open-vm-tools
 registries:
   - url: bcit.io
 labels:
